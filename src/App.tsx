@@ -1,10 +1,12 @@
 import "./App.css";
+import { RangeComponent } from "./components/RangeComponent/RangeComponent";
 
 function App() {
-
   return (
     <>
-      <div></div>
+      <div>
+        <RangeComponent />
+      </div>
     </>
   );
 }

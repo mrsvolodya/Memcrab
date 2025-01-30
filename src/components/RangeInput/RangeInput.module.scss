@@ -1,0 +1,8 @@
+.range {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  &_name {
+    min-width: 100px;
+  }
+}

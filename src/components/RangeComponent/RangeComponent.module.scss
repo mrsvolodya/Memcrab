@@ -1,0 +1,9 @@
+.rangeContaiter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  &_title {
+    margin-top: 10px;
+  }
+}
