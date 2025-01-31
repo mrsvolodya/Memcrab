@@ -4,7 +4,7 @@ import { TableContext } from "./TableContext";
 import { RangeType } from "../types/RangeType";
 import { DEFAULT_RANGE } from "../constants/DEFAULT_RANGE.ts";
 
-export function TableProvider({ children }: TableProviderType) {
+export const TableProvider = ({ children }: TableProviderType) => {
   const [range, setRange] = useState<RangeType>(DEFAULT_RANGE);
   console.log({ range });
 
@@ -18,4 +18,4 @@ export function TableProvider({ children }: TableProviderType) {
   return (
     <TableContext.Provider value={values}>{children}</TableContext.Provider>
   );
-}
+};

@@ -1,14 +1,16 @@
 import "./App.css";
+import { DataTable } from "./components/DataTable/DataTable";
 import { RangeComponent } from "./components/RangeComponent/RangeComponent";
 
-function App() {
+const App = () => {
   return (
     <>
       <div>
         <RangeComponent />
+        <DataTable />
       </div>
     </>
   );
-}
+};
 
 export default App;

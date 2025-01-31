@@ -1,21 +1,30 @@
-import { useContext } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useContext, useEffect, useState } from "react";
 import { TableContext } from "../../store/TableContext";
 import { AxisType } from "../../types/AxisType";
 import style from "./RangeInput.module.scss";
 import { convertAxisToName } from "../../utils/convertAxisToName";
+import { useDebounce } from "../../hooks/useDebounce.ts";
 
 type AxisProps = {
   axis: AxisType;
 };
 
-export function RangeInput({ axis }: AxisProps) {
+export const RangeInput: React.FC<AxisProps> = ({ axis }) => {
   const { range, setRange } = useContext(TableContext);
+  const [localValue, setLocalValue] = useState(range[axis]);
 
-  function handleRange(v: number) {
+  const debounceValue = useDebounce(localValue, 200);
+
+  useEffect(() => {
     setRange((prevRange) => ({
       ...prevRange,
-      [axis]: v,
+      [axis]: localValue,
     }));
+  }, [debounceValue]);
+
+  function handleRange(v: number) {
+    setLocalValue(v);
   }
 
   const rangeOf = convertAxisToName(axis, range);
@@ -31,9 +40,9 @@ export function RangeInput({ axis }: AxisProps) {
         name={`range of ${axis}`}
         min="0"
         max="100"
-        value={range[axis]}
+        value={localValue}
         onChange={(e) => handleRange(+e.target.value)}
       />
     </div>
   );
-}
+};
