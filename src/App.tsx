@@ -1,13 +1,15 @@
-import "./App.css";
+import { useContext } from "react";
 import { DataTable } from "./components/DataTable/DataTable";
 import { RangeComponent } from "./components/RangeComponent/RangeComponent";
+import { TableContext } from "./store/TableContext";
 
 const App = () => {
+  const { range } = useContext(TableContext);
   return (
     <>
       <div>
         <RangeComponent />
-        <DataTable />
+        {range.N >= 1 && range.M >= 1 && <DataTable />}
       </div>
     </>
   );

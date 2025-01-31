@@ -1,6 +1,6 @@
 import { AxisKey } from "../../enums/AxisKey";
 import style from "./RangeComponent.module.scss";
-import { RangeInput } from "../RangeInput/RangeInput";
+import { RangeInput } from "./RangeInput/RangeInput";
 
 export const RangeComponent = () => {
   return (
@@ -10,4 +10,4 @@ export const RangeComponent = () => {
       <RangeInput axis={AxisKey.N} />
     </div>
   );
-}
+};
