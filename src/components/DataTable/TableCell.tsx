@@ -1,8 +1,25 @@
-import React from "react";
+import React, { useContext } from "react";
 import style from "./DataTable.module.scss";
+import { TableContext } from "../../store/TableContext";
 
-export const TableCell = React.memo(
-  ({ children }: { children: React.ReactNode }) => {
-    return <td className={style.table_cell}>{children}</td>;
-  }
-);
+type TableCellProps = {
+  rowId?: number;
+  cellId?: string;
+  children: React.ReactNode;
+};
+
+export const TableCell = ({ children, rowId, cellId }: TableCellProps) => {
+  const { handleIncreaseOnClick } = useContext(TableContext);
+
+  const handleOnCellClick = () => {
+    if ((rowId || rowId === 0) && cellId) {
+      handleIncreaseOnClick(rowId, cellId);
+    }
+  };
+
+  return (
+    <td className={style.table_cell} onClick={handleOnCellClick}>
+      {children}
+    </td>
+  );
+};

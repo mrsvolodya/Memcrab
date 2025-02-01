@@ -3,7 +3,6 @@
   font-size: 12px;
   border-collapse: collapse;
   letter-spacing: 1px;
-  margin-top: 20px;
 
   &_head {
     background-color: #3a3b41;
@@ -11,6 +10,7 @@
 
   &_cell {
     border: 1px solid rgb(160 160 160);
+    cursor: pointer;
     padding: 6px 8px;
   }
 }

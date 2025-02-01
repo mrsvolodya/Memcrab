@@ -1,7 +1,10 @@
 import { createContext } from "react";
 import { TableContextType } from "../types/TableContextType";
+import { DEFAULT_RANGE } from "../constants/DEFAULT_RANGE";
 
 export const TableContext = createContext<TableContextType>({
-  range: { M: 3, N: 3 },
+  range: DEFAULT_RANGE,
   setRange: () => {},
+  matrix: [],
+  handleIncreaseOnClick: () => {},
 });
