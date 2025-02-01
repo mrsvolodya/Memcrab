@@ -3,12 +3,21 @@ import { TableContext } from "../../store/TableContext";
 import { TableRow } from "./TableRow";
 import style from "./DataTable.module.scss";
 import { TableCell } from "./TableCell";
-import { calculatePercentail } from "../../utils/calculatePercentail";
+import { calcPercentail } from "../../utils/calcPercentail";
 
 export const TableBody = () => {
   const { matrix } = useContext(TableContext);
-  const percentile = calculatePercentail(matrix);
-  if (!percentile) return;
+  const percentile = calcPercentail(matrix);
+
+  if (
+    !matrix ||
+    matrix.length === 0 ||
+    matrix.every((row) => row.length === 0) ||
+    !percentile
+  ) {
+    return null;
+  }
+
   return (
     <tbody className={style.table_body}>
       {matrix.map((cells, i) => (

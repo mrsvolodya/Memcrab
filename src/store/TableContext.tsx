@@ -4,7 +4,8 @@ import { DEFAULT_RANGE } from "../constants/DEFAULT_RANGE";
 
 export const TableContext = createContext<TableContextType>({
   range: DEFAULT_RANGE,
-  setRange: () => {},
   matrix: [],
+  setRange: () => {},
+  handleDeleteRow: () => [],
   handleIncreaseOnClick: () => {},
 });

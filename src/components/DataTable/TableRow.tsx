@@ -1,6 +1,7 @@
 import style from "../DataTable/DataTable.module.scss";
 import { TableCell } from "./TableCell";
 import { CellType } from "../../types/CellType";
+import { DeleteButton } from "../UI elements/DeleteButton/DeleteButton";
 
 type TableRowProps = {
   cells: CellType[];
@@ -13,7 +14,8 @@ export const TableRow = ({ cells, rowID }: TableRowProps) => {
     <>
       <tr className={style.table_row}>
         <th scope="row" className={style.table_cell}>
-          Cell Value M = {rowID + 1}
+          <span>Cell Value M = {rowID + 1}</span>
+          <DeleteButton rowId={rowID} />
         </th>
         {cells.map((cell) => (
           <TableCell key={cell.id} rowId={rowID} cellId={cell.id}>
@@ -21,6 +23,7 @@ export const TableRow = ({ cells, rowID }: TableRowProps) => {
             {cell.amount}
           </TableCell>
         ))}
+
         <TableCell>{sum}</TableCell>
       </tr>
     </>

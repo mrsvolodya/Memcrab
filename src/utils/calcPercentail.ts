@@ -1,6 +1,6 @@
 import { MatrixType } from "../types/MatrixType";
 
-export const calculatePercentail = (matrix: MatrixType) => {
+export const calcPercentail = (matrix: MatrixType) => {
   if (!matrix.length) return;
   return matrix[0].map((_, i) => {
     const valueAmount =

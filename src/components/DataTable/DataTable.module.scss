@@ -13,4 +13,8 @@
     cursor: pointer;
     padding: 6px 8px;
   }
+
+  &_active {
+    background-color: rgb(54, 72, 110);
+  }
 }

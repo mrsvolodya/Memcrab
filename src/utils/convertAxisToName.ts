@@ -15,5 +15,9 @@ export const convertAxisToName = (axis: AxisType, range: RangeType) => {
     return "cell";
   }
 
+  if (AxisKey.X === axis) {
+    return "nearest count";
+  }
+
   return "cells";
 };

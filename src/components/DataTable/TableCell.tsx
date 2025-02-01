@@ -9,7 +9,7 @@ type TableCellProps = {
 };
 
 export const TableCell = ({ children, rowId, cellId }: TableCellProps) => {
-  const { handleIncreaseOnClick } = useContext(TableContext);
+  const { handleIncreaseOnClick, matrix } = useContext(TableContext);
 
   const handleOnCellClick = () => {
     if ((rowId || rowId === 0) && cellId) {
@@ -18,7 +18,10 @@ export const TableCell = ({ children, rowId, cellId }: TableCellProps) => {
   };
 
   return (
-    <td className={style.table_cell} onClick={handleOnCellClick}>
+    <td
+      className={`${style.table_cell} ${matrix[0] ? style.table_active : ""}`}
+      onClick={handleOnCellClick}
+    >
       {children}
     </td>
   );

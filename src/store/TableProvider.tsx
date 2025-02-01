@@ -15,6 +15,7 @@ export const TableProvider = ({ children }: TableProviderType) => {
   useEffect(() => {
     setMatrix(() => createMatrix(range));
   }, [range]);
+
   const handleIncreaseOnClick = useCallback((rowId: number, cellId: string) => {
     setMatrix((prevMatrix) =>
       prevMatrix.map((row, i) =>
@@ -27,14 +28,21 @@ export const TableProvider = ({ children }: TableProviderType) => {
     );
   }, []);
 
+  const handleDeleteRow = useCallback((rowId: number) => {
+    setMatrix((prevMatrix) => {
+      return prevMatrix.filter((_, index) => rowId !== index);
+    });
+  }, []);
+
   const values = useMemo(
     () => ({
       range,
       matrix,
       setRange,
+      handleDeleteRow,
       handleIncreaseOnClick,
     }),
-    [range, matrix, handleIncreaseOnClick]
+    [range, matrix, handleIncreaseOnClick, handleDeleteRow]
   );
   return (
     <TableContext.Provider value={values}>{children}</TableContext.Provider>
