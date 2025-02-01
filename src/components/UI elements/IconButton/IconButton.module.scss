@@ -1,0 +1,24 @@
+.iconBtn {
+  background-color: transparent;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+
+  &_title {
+    color: #fff;
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  &_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+
+  &:hover {
+    transform: scale(1.08);
+  }
+}

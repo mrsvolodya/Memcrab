@@ -3,6 +3,7 @@ import { RangeType } from "./RangeType";
 
 export type TableContextType = {
   range: RangeType;
+  addRow: () => void;
   matrix: MatrixType;
   handleDeleteRow: (rowId: number) => void;
   setRange: (v: RangeType | ((b: RangeType) => RangeType)) => void;

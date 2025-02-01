@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { TableProviderType } from "../types/TableProviderType";
 import { TableContext } from "./TableContext";
@@ -34,15 +35,28 @@ export const TableProvider = ({ children }: TableProviderType) => {
     });
   }, []);
 
+  const addRow = () => {
+    setMatrix((prevMatrix) => {
+      const addOneRow = {
+        M: 1,
+        N: range.N,
+        X: 1,
+      };
+
+      return [...prevMatrix, ...createMatrix(addOneRow, prevMatrix.length)];
+    });
+  };
+
   const values = useMemo(
     () => ({
       range,
+      addRow,
       matrix,
       setRange,
       handleDeleteRow,
       handleIncreaseOnClick,
     }),
-    [range, matrix, handleIncreaseOnClick, handleDeleteRow]
+    [range, matrix, handleIncreaseOnClick]
   );
   return (
     <TableContext.Provider value={values}>{children}</TableContext.Provider>
