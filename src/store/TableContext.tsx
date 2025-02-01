@@ -3,10 +3,14 @@ import { TableContextType } from "../types/TableContextType";
 import { DEFAULT_RANGE } from "../constants/DEFAULT_RANGE";
 
 export const TableContext = createContext<TableContextType>({
-  range: DEFAULT_RANGE,
   addRow: () => {},
   matrix: [],
-  setRange: () => {},
-  handleDeleteRow: () => [],
-  handleIncreaseOnClick: () => {},
+  deleteRow: () => [],
+  highlightedCells: [],
+  setTableSize: () => {},
+  tableSize: DEFAULT_RANGE,
+  handleMouseEnter: () => {},
+  handleMouseLeave: () => [],
+  sethighlightCount: () => [],
+  increaseCellValue: () => {},
 });

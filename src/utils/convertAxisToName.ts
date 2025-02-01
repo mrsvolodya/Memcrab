@@ -1,8 +1,8 @@
 import { AxisKey } from "../enums/AxisKey";
 import { AxisType } from "../types/AxisType";
-import { RangeType } from "../types/RangeType";
+import { TableSizeType } from "../types/TableSizeType";
 
-export const convertAxisToName = (axis: AxisType, range: RangeType) => {
+export const convertAxisToName = (axis: AxisType, range: TableSizeType) => {
   if (range[AxisKey.M] === 1 && AxisKey.M === axis) {
     return "row";
   }

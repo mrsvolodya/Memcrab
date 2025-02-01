@@ -5,15 +5,15 @@ import { IconButton } from "../UI elements/IconButton/IconButton";
 import PushIcon from "../../assets/icon-add-row.svg";
 
 export const TableHead = () => {
-  const { range, addRow } = useContext(TableContext);
-  const columnLength = Array.from({ length: range.N }, (_, i) => i + 1);
+  const { addRow, matrix } = useContext(TableContext);
+
   return (
     <thead className={style.table_head}>
       <tr className={style.table_row}>
         <th scope="col" className={style.table_cell}>
           <IconButton icon={PushIcon} title={"Add row:"} onClick={addRow} />
         </th>
-        {columnLength.map((_, i) => (
+        {matrix[0].map((_, i) => (
           <th scope="col" className={style.table_cell} key={`header_${i}`}>
             Cell values N = {i + 1}
           </th>

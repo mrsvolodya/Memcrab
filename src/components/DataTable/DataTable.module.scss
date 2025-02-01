@@ -10,11 +10,14 @@
 
   &_cell {
     border: 1px solid rgb(160 160 160);
+    text-align: center;
     cursor: pointer;
     padding: 6px 8px;
+    user-select: none;
+    min-width: 60px;
+    max-width: 180px;
   }
-
-  &_active {
-    background-color: rgb(54, 72, 110);
-  }
+}
+.highlighted {
+  background-color: rgb(54, 72, 110);
 }

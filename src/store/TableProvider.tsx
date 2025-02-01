@@ -2,22 +2,27 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { TableProviderType } from "../types/TableProviderType";
 import { TableContext } from "./TableContext";
-import { RangeType } from "../types/RangeType";
+import { TableSizeType } from "../types/TableSizeType.ts";
 import { DEFAULT_RANGE } from "../constants/DEFAULT_RANGE.ts";
 import { createMatrix } from "../utils/createMatrix.ts";
 import { MatrixType } from "../types/MatrixType.ts";
+import { findNearestCells } from "../utils/findNearestCells.ts";
+import { calcLimitForX } from "../utils/calcLimitForX.ts";
 
 export const TableProvider = ({ children }: TableProviderType) => {
-  const [range, setRange] = useState<RangeType>(DEFAULT_RANGE);
+  const [tableSize, setTableSize] = useState<TableSizeType>(DEFAULT_RANGE);
+  const [highlightCount, sethighlightCount] = useState(() =>
+    calcLimitForX(tableSize)
+  );
+  const [highlightedCells, setHighlightedCells] = useState<string[]>([]);
   const [matrix, setMatrix] = useState<MatrixType>(() =>
     createMatrix(DEFAULT_RANGE)
   );
-
   useEffect(() => {
-    setMatrix(() => createMatrix(range));
-  }, [range]);
+    setMatrix(() => createMatrix(tableSize));
+  }, [tableSize]);
 
-  const handleIncreaseOnClick = useCallback((rowId: number, cellId: string) => {
+  const increaseCellValue = useCallback((rowId: number, cellId: string) => {
     setMatrix((prevMatrix) =>
       prevMatrix.map((row, i) =>
         i === rowId
@@ -29,7 +34,7 @@ export const TableProvider = ({ children }: TableProviderType) => {
     );
   }, []);
 
-  const handleDeleteRow = useCallback((rowId: number) => {
+  const deleteRow = useCallback((rowId: number) => {
     setMatrix((prevMatrix) => {
       return prevMatrix.filter((_, index) => rowId !== index);
     });
@@ -39,24 +44,36 @@ export const TableProvider = ({ children }: TableProviderType) => {
     setMatrix((prevMatrix) => {
       const addOneRow = {
         M: 1,
-        N: range.N,
-        X: 1,
+        N: tableSize.N,
       };
 
       return [...prevMatrix, ...createMatrix(addOneRow, prevMatrix.length)];
     });
   };
 
+  const handleMouseEnter = (value: number, cellId: string = "") => {
+    if (!cellId) return setHighlightedCells([]);
+    setHighlightedCells(findNearestCells(matrix, value, highlightCount));
+  };
+
+  const handleMouseLeave = () => {
+    setHighlightedCells([]);
+  };
+
   const values = useMemo(
     () => ({
-      range,
       addRow,
       matrix,
-      setRange,
-      handleDeleteRow,
-      handleIncreaseOnClick,
+      deleteRow,
+      tableSize,
+      sethighlightCount,
+      setTableSize,
+      highlightedCells,
+      handleMouseEnter,
+      handleMouseLeave,
+      increaseCellValue,
     }),
-    [range, matrix, handleIncreaseOnClick]
+    [tableSize, matrix, increaseCellValue, highlightedCells]
   );
   return (
     <TableContext.Provider value={values}>{children}</TableContext.Provider>

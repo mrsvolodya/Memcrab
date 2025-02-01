@@ -1,11 +1,17 @@
 import { MatrixType } from "./MatrixType";
-import { RangeType } from "./RangeType";
+import { TableSizeType } from "./TableSizeType";
 
 export type TableContextType = {
-  range: RangeType;
   addRow: () => void;
   matrix: MatrixType;
-  handleDeleteRow: (rowId: number) => void;
-  setRange: (v: RangeType | ((b: RangeType) => RangeType)) => void;
-  handleIncreaseOnClick: (rodId: number, cellId: string) => void;
+  tableSize: TableSizeType;
+  highlightedCells: string[];
+  handleMouseLeave: () => void;
+  deleteRow: (rowId: number) => void;
+  sethighlightCount: (r: number) => void;
+  handleMouseEnter: (value: number, cellId: string) => void;
+  increaseCellValue: (rodId: number, cellId: string) => void;
+  setTableSize: (
+    v: TableSizeType | ((b: TableSizeType) => TableSizeType)
+  ) => void;
 };

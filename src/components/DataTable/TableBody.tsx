@@ -7,6 +7,7 @@ import { calcPercentail } from "../../utils/calcPercentail";
 
 export const TableBody = () => {
   const { matrix } = useContext(TableContext);
+
   const percentile = calcPercentail(matrix);
 
   if (
@@ -26,7 +27,7 @@ export const TableBody = () => {
       <tr className={style.table_row}>
         <th className={style.table_cell}>50th percentile</th>
         {percentile.map((cell) => (
-          <TableCell key={cell.id}>{cell.amount}</TableCell>
+          <TableCell key={cell.id} value={cell.amount} />
         ))}
       </tr>
     </tbody>

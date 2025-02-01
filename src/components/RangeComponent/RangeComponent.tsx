@@ -6,8 +6,8 @@ import { TableContext } from "../../store/TableContext";
 import { calcLimitForX } from "../../utils/calcLimitForX";
 
 export const RangeComponent = () => {
-  const { range } = useContext(TableContext);
-  const calculateMaxCellsCount = calcLimitForX(range);
+  const { tableSize } = useContext(TableContext);
+  const calculateMaxCellsCount = calcLimitForX(tableSize);
   return (
     <div className={style.rangeContaiter}>
       <h4 className={style.rangeContaiter_title}>Range for M , N, X</h4>

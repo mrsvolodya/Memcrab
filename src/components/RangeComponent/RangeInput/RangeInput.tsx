@@ -19,26 +19,28 @@ export const RangeInput: React.FC<AxisProps> = ({
   min = 0,
   max = 100,
 }) => {
-  const { range, setRange } = useContext(TableContext);
-  const [localRange, setLocalRange] = useState<number>(range[axis]);
+  const { tableSize, setTableSize, sethighlightCount } =
+    useContext(TableContext);
+  const [localRange, setLocalRange] = useState<number>(3);
 
   const debounceValue = useDebounce(localRange, 200);
 
   useEffect(() => {
     if (axis === AxisKey.X) {
-      const maxX = calcLimitForX(range);
+      const maxX = calcLimitForX(tableSize);
+      sethighlightCount(localRange);
       setLocalRange((prev) => Math.max(0, Math.min(prev, maxX)));
     }
 
-    if (axis !== AxisKey.X && range[axis] !== debounceValue) {
-      setRange((prevRange) => ({
+    if (axis !== AxisKey.X && tableSize[axis] !== debounceValue) {
+      setTableSize((prevRange) => ({
         ...prevRange,
         [axis]: debounceValue,
       }));
     }
-  }, [debounceValue, range]);
+  }, [debounceValue, tableSize]);
 
-  const rangeOf = convertAxisToName(axis, range);
+  const rangeOf = convertAxisToName(axis, tableSize);
 
   return (
     <div className={style.range}>

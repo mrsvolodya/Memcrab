@@ -1,28 +1,40 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import style from "./DataTable.module.scss";
 import { TableContext } from "../../store/TableContext";
 
 type TableCellProps = {
   rowId?: number;
   cellId?: string;
-  children: React.ReactNode;
+  value: number;
 };
 
-export const TableCell = ({ children, rowId, cellId }: TableCellProps) => {
-  const { handleIncreaseOnClick, matrix } = useContext(TableContext);
+export const TableCell = ({ rowId, cellId, value }: TableCellProps) => {
+  const {
+    increaseCellValue,
+    highlightedCells,
+    handleMouseEnter,
+    handleMouseLeave,
+  } = useContext(TableContext);
 
-  const handleOnCellClick = () => {
+  const handleCellClick = () => {
     if ((rowId || rowId === 0) && cellId) {
-      handleIncreaseOnClick(rowId, cellId);
+      increaseCellValue(rowId, cellId);
     }
   };
 
+  const titleMessage = cellId && "Click to increase";
+
   return (
     <td
-      className={`${style.table_cell} ${matrix[0] ? style.table_active : ""}`}
-      onClick={handleOnCellClick}
+      onMouseLeave={handleMouseLeave}
+      className={`${style.table_cell} ${
+        highlightedCells.includes(cellId!) ? style.highlighted : ""
+      }`}
+      onClick={handleCellClick}
+      title={titleMessage}
+      onMouseEnter={() => handleMouseEnter(value, cellId!)}
     >
-      {children}
+      {value}
     </td>
   );
 };

@@ -1,7 +1,6 @@
-import { RangeType } from "../types/RangeType";
+import { TableSizeType } from "../types/TableSizeType";
 
-export const DEFAULT_RANGE: RangeType = {
+export const DEFAULT_RANGE: TableSizeType = {
   M: 3,
   N: 3,
-  X: 3,
 };
