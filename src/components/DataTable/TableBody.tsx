@@ -21,9 +21,10 @@ export const TableBody = () => {
 
   return (
     <tbody className={style.table_body}>
-      {matrix.map((cells, i) => (
-        <TableRow key={cells[0].id} cells={cells} rowID={i} />
-      ))}
+      {matrix.map((cells, i) => {
+        const sum = cells.reduce((acc, col) => acc + col.amount, 0);
+        return <TableRow key={i} cells={cells} rowID={i} sum={sum} />;
+      })}
       <tr className={style.table_row}>
         <th className={style.table_cell}>50th percentile</th>
         {percentile.map((cell) => (

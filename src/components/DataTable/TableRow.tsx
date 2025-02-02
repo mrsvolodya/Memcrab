@@ -1,45 +1,56 @@
-import style from "../DataTable/DataTable.module.scss";
 import { TableCell } from "./TableCell";
 import { CellType } from "../../types/CellType";
 import { IconButton } from "../UI elements/IconButton/IconButton";
-import { useContext } from "react";
+import { useContext, useMemo } from "react";
 import { TableContext } from "../../store/TableContext";
-import DeleteIcon from "../../assets/icon-del.svg";
 import { getRowTitle } from "../../utils/getRowTitle";
+import DeleteIcon from "../../assets/icon-del.svg";
+import style from "../DataTable/DataTable.module.scss";
+import { getPersentOfSum } from "../../utils/getPersentOfSum";
 
 type TableRowProps = {
   cells: CellType[];
   rowID: number;
+  sum: number;
 };
 
-export const TableRow = ({ cells, rowID }: TableRowProps) => {
-  const { deleteRow } = useContext(TableContext);
-  const handleOnDelete = () => {
-    deleteRow(rowID);
-  };
+export const TableRow = ({ cells, rowID, sum }: TableRowProps) => {
+  const { deleteRow, isPersent } = useContext(TableContext);
 
-  const sum = cells.reduce((acc, col) => acc + col.amount, 0);
   const title = getRowTitle(cells[0].id);
+
+  const { percentages } = useMemo(() => {
+    return {
+      percentages: cells.map((cell) => ((cell.amount / sum) * 100).toFixed(1)),
+    };
+  }, [cells, sum]);
+
   return (
     <>
       <tr className={style.table_row}>
         <th scope="row" className={style.table_cell}>
           <IconButton
             icon={DeleteIcon}
-            onClick={handleOnDelete}
+            onClick={() => deleteRow(rowID)}
             title={title}
           />
         </th>
-        {cells.map((cell) => (
-          <TableCell
-            key={cell.id}
-            rowId={rowID}
-            cellId={cell.id}
-            value={cell.amount}
-          />
-        ))}
+        {cells.map((cell, cellIndex) => {
+          return (
+            <TableCell
+              key={cell.id}
+              rowId={rowID}
+              cellId={cell.id}
+              value={
+                isPersent.isActive && isPersent.id === rowID
+                  ? `${percentages[cellIndex]} %`
+                  : cell.amount
+              }
+            />
+          );
+        })}
 
-        <TableCell value={sum} />
+        <TableCell value={sum} rowId={rowID} />
       </tr>
     </>
   );

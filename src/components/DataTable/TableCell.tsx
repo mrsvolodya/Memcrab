@@ -5,7 +5,7 @@ import style from "./DataTable.module.scss";
 type TableCellProps = {
   rowId?: number;
   cellId?: string;
-  value: number;
+  value: number | string;
 };
 
 export const TableCell = ({ rowId, cellId, value }: TableCellProps) => {
@@ -25,13 +25,13 @@ export const TableCell = ({ rowId, cellId, value }: TableCellProps) => {
   const titleMessage = cellId && "Click to increase";
   return (
     <td
-      onMouseLeave={handleMouseLeave}
       className={`${style.table_cell} ${
         highlightedCells.includes(cellId!) ? style.highlighted : ""
       }`}
-      onClick={handleCellClick}
       title={titleMessage}
-      onMouseEnter={() => handleMouseEnter(value, cellId!)}
+      onClick={handleCellClick}
+      onMouseLeave={handleMouseLeave}
+      onMouseEnter={() => handleMouseEnter(+value, cellId!, rowId!)}
     >
       {value}
     </td>

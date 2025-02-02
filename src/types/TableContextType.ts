@@ -1,16 +1,18 @@
 import { InputRangeType } from "./InputRangeType";
 import { MatrixType } from "./MatrixType";
+import { PersentType } from "./PersentType";
 
 export type TableContextType = {
   addRow: () => void;
+  isPersent: PersentType;
   highlightCount: number;
   matrix: MatrixType;
   highlightedCells: string[];
   handleMouseLeave: () => void;
   deleteRow: (rowId: number) => void;
   inputRange: InputRangeType;
-  setInputRange: React.Dispatch<React.SetStateAction<InputRangeType>>;
   sethighlightCount: (r: number) => void;
-  handleMouseEnter: (value: number, cellId: string) => void;
+  setInputRange: React.Dispatch<React.SetStateAction<InputRangeType>>;
+  handleMouseEnter: (value: number, cellId: string, rowId: number) => void;
   increaseCellValue: (rodId: number, cellId: string) => void;
 };

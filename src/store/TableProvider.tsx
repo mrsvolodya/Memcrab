@@ -8,12 +8,17 @@ import { findNearestCells } from "../utils/findNearestCells.ts";
 import { getNextRowIndex } from "../utils/getNextRowIndex.ts";
 import { InputRangeType } from "../types/InputRangeType.ts";
 import { INPUT_RANGE_DEFAULT } from "../constants/INPUT_RANGE_DEFAULT.ts";
+import { PersentType } from "../types/PersentType.ts";
 
 export const TableProvider = ({ children }: TableProviderType) => {
   const [inputRange, setInputRange] =
     useState<InputRangeType>(INPUT_RANGE_DEFAULT);
   const [highlightCount, sethighlightCount] = useState(inputRange.X);
   const [highlightedCells, setHighlightedCells] = useState<string[]>([]);
+  const [isPersent, setIsPersent] = useState<PersentType>({
+    id: null,
+    isActive: false,
+  });
   const [matrix, setMatrix] = useState<MatrixType>(() =>
     createMatrix(inputRange)
   );
@@ -62,9 +67,14 @@ export const TableProvider = ({ children }: TableProviderType) => {
   };
 
   const handleMouseEnter = useCallback(
-    (value: number, cellId: string = "") => {
-      if (!cellId) {
+    (value: number, cellId: string = "", rowId: number) => {
+      if (!cellId && !rowId && rowId !== 0) {
         setHighlightedCells([]);
+        return;
+      }
+
+      if ((rowId === 0 || rowId) && !cellId) {
+        setIsPersent({ id: rowId, isActive: true });
         return;
       }
 
@@ -76,15 +86,16 @@ export const TableProvider = ({ children }: TableProviderType) => {
     },
     [matrix, highlightCount]
   );
-
   const handleMouseLeave = () => {
     setHighlightedCells([]);
+    setIsPersent({ id: null, isActive: false });
   };
 
   const values = useMemo(
     () => ({
       addRow,
       matrix,
+      isPersent,
       deleteRow,
       setMatrix,
       inputRange,
