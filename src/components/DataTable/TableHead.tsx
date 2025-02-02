@@ -13,11 +13,12 @@ export const TableHead = () => {
         <th scope="col" className={style.table_cell}>
           <IconButton icon={PushIcon} title={"Add row:"} onClick={addRow} />
         </th>
-        {matrix[0].map((_, i) => (
-          <th scope="col" className={style.table_cell} key={`header_${i}`}>
-            Cell values N = {i + 1}
-          </th>
-        ))}
+        {matrix.length > 0 &&
+          matrix[0].map((_, i) => (
+            <th scope="col" className={style.table_cell} key={`header_${i}`}>
+              Cell values N = {i + 1}
+            </th>
+          ))}
         <th scope="col" className={style.table_cell}>
           Sum values
         </th>
