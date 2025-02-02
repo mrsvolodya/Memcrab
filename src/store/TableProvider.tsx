@@ -2,25 +2,37 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { TableProviderType } from "../types/TableProviderType";
 import { TableContext } from "./TableContext";
-import { TableSizeType } from "../types/TableSizeType.ts";
-import { DEFAULT_RANGE } from "../constants/DEFAULT_RANGE.ts";
 import { createMatrix } from "../utils/createMatrix.ts";
 import { MatrixType } from "../types/MatrixType.ts";
 import { findNearestCells } from "../utils/findNearestCells.ts";
-import { calcLimitForX } from "../utils/calcLimitForX.ts";
+import { getNextRowIndex } from "../utils/getNextRowIndex.ts";
+import { InputRangeType } from "../types/InputRangeType.ts";
+import { INPUT_RANGE_DEFAULT } from "../constants/INPUT_RANGE_DEFAULT.ts";
 
 export const TableProvider = ({ children }: TableProviderType) => {
-  const [tableSize, setTableSize] = useState<TableSizeType>(DEFAULT_RANGE);
-  const [highlightCount, sethighlightCount] = useState(() =>
-    calcLimitForX(tableSize)
-  );
+  const [inputRange, setInputRange] =
+    useState<InputRangeType>(INPUT_RANGE_DEFAULT);
+  const [highlightCount, sethighlightCount] = useState(inputRange.X);
   const [highlightedCells, setHighlightedCells] = useState<string[]>([]);
   const [matrix, setMatrix] = useState<MatrixType>(() =>
-    createMatrix(DEFAULT_RANGE)
+    createMatrix(inputRange)
   );
+
   useEffect(() => {
-    setMatrix(() => createMatrix(tableSize));
-  }, [tableSize]);
+    requestAnimationFrame(() => {
+      setMatrix((prevMatrix) => {
+        const newMatrix = createMatrix(inputRange);
+        return newMatrix.map((row, rowIndex) =>
+          row.map((cell, cellIndex) => {
+            const existingCell = prevMatrix[rowIndex]?.[cellIndex];
+            return existingCell
+              ? { ...cell, amount: existingCell.amount }
+              : cell;
+          })
+        );
+      });
+    });
+  }, [inputRange]);
 
   const increaseCellValue = useCallback((rowId: number, cellId: string) => {
     setMatrix((prevMatrix) =>
@@ -38,23 +50,32 @@ export const TableProvider = ({ children }: TableProviderType) => {
     setMatrix((prevMatrix) => {
       return prevMatrix.filter((_, index) => rowId !== index);
     });
+    setInputRange((prev) => ({ ...prev, M: Math.max(prev.M - 1, 1) }));
   }, []);
 
   const addRow = () => {
-    setMatrix((prevMatrix) => {
-      const addOneRow = {
-        M: 1,
-        N: tableSize.N,
-      };
+    const nextRowIndex = getNextRowIndex(matrix);
+    const newRow = createMatrix({ M: 1, N: inputRange.N }, nextRowIndex);
 
-      return [...prevMatrix, ...createMatrix(addOneRow, prevMatrix.length)];
-    });
+    setMatrix((prevMatrix) => [...prevMatrix, ...newRow]);
+    setInputRange((prev) => ({ ...prev, M: prev.M + 1 }));
   };
 
-  const handleMouseEnter = (value: number, cellId: string = "") => {
-    if (!cellId) return setHighlightedCells([]);
-    setHighlightedCells(findNearestCells(matrix, value, highlightCount));
-  };
+  const handleMouseEnter = useCallback(
+    (value: number, cellId: string = "") => {
+      if (!cellId) {
+        setHighlightedCells([]);
+        return;
+      }
+
+      requestAnimationFrame(() => {
+        setHighlightedCells(
+          findNearestCells(matrix, value, highlightCount, cellId)
+        );
+      });
+    },
+    [matrix, highlightCount]
+  );
 
   const handleMouseLeave = () => {
     setHighlightedCells([]);
@@ -65,15 +86,17 @@ export const TableProvider = ({ children }: TableProviderType) => {
       addRow,
       matrix,
       deleteRow,
-      tableSize,
-      sethighlightCount,
-      setTableSize,
+      setMatrix,
+      inputRange,
+      setInputRange,
+      highlightCount,
       highlightedCells,
       handleMouseEnter,
       handleMouseLeave,
       increaseCellValue,
+      sethighlightCount,
     }),
-    [tableSize, matrix, increaseCellValue, highlightedCells]
+    [matrix, increaseCellValue, highlightedCells, inputRange]
   );
   return (
     <TableContext.Provider value={values}>{children}</TableContext.Provider>

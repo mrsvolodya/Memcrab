@@ -14,7 +14,10 @@ type TableRowProps = {
 
 export const TableRow = ({ cells, rowID }: TableRowProps) => {
   const { deleteRow } = useContext(TableContext);
-  const handleOnDelete = () => deleteRow(rowID);
+  const handleOnDelete = () => {
+    deleteRow(rowID);
+  };
+
   const sum = cells.reduce((acc, col) => acc + col.amount, 0);
   const title = getRowTitle(cells[0].id);
   return (

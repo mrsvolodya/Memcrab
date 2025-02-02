@@ -4,11 +4,11 @@ import { RangeComponent } from "./components/RangeComponent/RangeComponent";
 import { TableContext } from "./store/TableContext";
 
 const App = () => {
-  const { tableSize } = useContext(TableContext);
+  const { inputRange } = useContext(TableContext);
   return (
     <div>
       <RangeComponent />
-      <div>{tableSize.N >= 1 && tableSize.M >= 1 && <DataTable />}</div>
+      <div>{inputRange.N >= 1 && inputRange.M >= 1 && <DataTable />}</div>
     </div>
   );
 };

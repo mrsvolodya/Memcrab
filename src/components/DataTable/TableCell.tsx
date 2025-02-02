@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import style from "./DataTable.module.scss";
 import { TableContext } from "../../store/TableContext";
+import style from "./DataTable.module.scss";
 
 type TableCellProps = {
   rowId?: number;
@@ -23,7 +23,6 @@ export const TableCell = ({ rowId, cellId, value }: TableCellProps) => {
   };
 
   const titleMessage = cellId && "Click to increase";
-
   return (
     <td
       onMouseLeave={handleMouseLeave}
