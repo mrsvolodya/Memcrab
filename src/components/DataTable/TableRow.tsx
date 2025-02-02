@@ -21,7 +21,7 @@ export const TableRow = ({ cells, rowID, sum }: TableRowProps) => {
 
   const { percentages } = useMemo(() => {
     return {
-      percentages: cells.map((cell) => ((cell.amount / sum) * 100).toFixed(1)),
+      percentages: getPersentOfSum(sum, cells),
     };
   }, [cells, sum]);
 
