@@ -2,7 +2,7 @@ import style from "./DataTable.module.scss";
 import { TableHead } from "./TableHead";
 import { TableBody } from "./TableBody";
 import { memo, useContext } from "react";
-import { HighlightContext } from "../../context/HighlightContext";
+import { HighlightContext } from "../../contexts/HighlightContext";
 
 const DataTableBase = () => {
   const { handleMouseLeave } = useContext(HighlightContext);

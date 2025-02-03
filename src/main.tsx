@@ -1,10 +1,10 @@
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.tsx";
-import { TableProvider } from "./store/TableProvider.tsx";
+import { StoreProvider } from "./store/StoreProvider.tsx";
 
 createRoot(document.getElementById("root")!).render(
-  <TableProvider>
+  <StoreProvider>
     <App />
-  </TableProvider>
+  </StoreProvider>
 );

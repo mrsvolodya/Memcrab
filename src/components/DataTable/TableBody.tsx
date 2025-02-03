@@ -3,9 +3,9 @@ import { TableRow } from "./TableRow";
 import style from "./DataTable.module.scss";
 import { TableCell } from "./TableCell";
 import { calcPercentail } from "../../utils/calcPercentail";
-import { MatrixContext } from "../../context/MatrixContext";
+import { MatrixContext } from "../../contexts/MatrixContext";
 
-const TableBodyBase  = () => {
+const TableBodyBase = () => {
   const matrixContext = useContext(MatrixContext);
   if (!matrixContext) return null;
   const { matrix } = matrixContext;

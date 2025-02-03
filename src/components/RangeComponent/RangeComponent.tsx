@@ -1,7 +1,7 @@
 import { useContext, memo } from "react";
 import { AxisKey } from "../../enums/AxisKey";
 import { RangeInput } from "./RangeInput/RangeInput";
-import { TableContext } from "../../store/TableContext";
+import { TableContext } from "../../contexts/TableContext";
 import { calcLimitForX } from "../../utils/calcLimitForX";
 import style from "./RangeComponent.module.scss";
 

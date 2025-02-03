@@ -21,3 +21,44 @@
 .highlighted {
   background-color: rgb(54, 72, 110);
 }
+
+.currentHiglighted {
+  position: relative;
+  transition: transform 0.2s ease-in-out;
+
+  &:hover {
+    transform: scale(1.02);
+    background-color: rgb(160, 189, 32);
+  }
+
+  &:hover::after {
+    content: "Click to increase";
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: black;
+    color: white;
+    padding: 4px 4px;
+    border-radius: 5px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    animation: fadeOut 1.5s forwards;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.9;
+  }
+  90% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0;
+  }
+}

@@ -2,12 +2,12 @@ import { TableCell } from "./TableCell";
 import { CellType } from "../../types/CellType";
 import { IconButton } from "../UI elements/IconButton/IconButton";
 import { memo, useCallback, useContext, useMemo } from "react";
-import { TableContext } from "../../store/TableContext";
+import { TableContext } from "../../contexts/TableContext";
 import { getRowTitle } from "../../utils/getRowTitle";
 import DeleteIcon from "../../assets/icon-del.svg";
 import style from "../DataTable/DataTable.module.scss";
 import { getPersentOfSum } from "../../utils/getPersentOfSum";
-import { HighlightContext } from "../../context/HighlightContext";
+import { HighlightContext } from "../../contexts/HighlightContext";
 
 type TableRowProps = {
   cells: CellType[];
@@ -22,7 +22,10 @@ const TableRowBase = ({ cells, rowID, sum }: TableRowProps) => {
   const title = getRowTitle(cells[0].id);
   const handleDelete = useCallback(() => deleteRow(rowID), [deleteRow, rowID]);
   const percentages = useMemo(
-    () => (isPersent.isActive && isPersent.id === rowID ? getPersentOfSum(sum, cells) : []),
+    () =>
+      isPersent.isActive && isPersent.id === rowID
+        ? getPersentOfSum(sum, cells)
+        : [],
     [isPersent, rowID, sum, cells]
   );
 
@@ -30,11 +33,7 @@ const TableRowBase = ({ cells, rowID, sum }: TableRowProps) => {
     <>
       <tr className={style.table_row}>
         <th scope="row" className={style.table_cell}>
-          <IconButton
-            icon={DeleteIcon}
-            onClick={handleDelete}
-            title={title}
-          />
+          <IconButton icon={DeleteIcon} onClick={handleDelete} title={title} />
         </th>
         {cells.map((cell, cellIndex) => {
           return (
@@ -57,5 +56,4 @@ const TableRowBase = ({ cells, rowID, sum }: TableRowProps) => {
   );
 };
 
-
-export const TableRow = memo(TableRowBase)
+export const TableRow = memo(TableRowBase);

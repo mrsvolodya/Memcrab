@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { AxisType } from "../../../types/AxisType.ts";
-import { TableContext } from "../../../store/TableContext.tsx";
+import { TableContext } from "../../../contexts/TableContext.tsx";
 import { convertAxisToName } from "../../../utils/convertAxisToName.ts";
 import style from "./RangeInput.module.scss";
 import { AxisKey } from "../../../enums/AxisKey.ts";

@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { TableProviderType } from "../types/TableProviderType";
-import { TableContext } from "./TableContext";
+import { TableContext } from "../contexts/TableContext.tsx";
 import { createMatrix } from "../utils/createMatrix.ts";
 import { MatrixType } from "../types/MatrixType.ts";
 import { findNearestCells } from "../utils/findNearestCells.ts";
@@ -9,10 +8,11 @@ import { getNextRowIndex } from "../utils/getNextRowIndex.ts";
 import { InputRangeType } from "../types/InputRangeType.ts";
 import { INPUT_RANGE_DEFAULT } from "../constants/INPUT_RANGE_DEFAULT.ts";
 import { PersentType } from "../types/PersentType.ts";
-import { MatrixContext } from "../context/MatrixContext.tsx";
-import { HighlightContext } from "../context/HighlightContext.tsx";
+import { MatrixContext } from "../contexts/MatrixContext.tsx";
+import { HighlightContext } from "../contexts/HighlightContext.tsx";
+import { TableProviderType } from "../types/TableProviderType.ts";
 
-export const TableProvider = ({ children }: TableProviderType) => {
+export const StoreProvider = ({ children }: TableProviderType) => {
   const [inputRange, setInputRange] =
     useState<InputRangeType>(INPUT_RANGE_DEFAULT);
   const [highlightCount, sethighlightCount] = useState(inputRange.X);
@@ -90,6 +90,7 @@ export const TableProvider = ({ children }: TableProviderType) => {
     },
     [matrix, highlightCount]
   );
+
   const handleMouseLeave = () => {
     setHighlightedCells([]);
     setIsPersent({ id: null, isActive: false });

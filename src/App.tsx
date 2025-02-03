@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { DataTable } from "./components/DataTable/DataTable";
 import { RangeComponent } from "./components/RangeComponent/RangeComponent";
-import { TableContext } from "./store/TableContext";
+import { TableContext } from "./contexts/TableContext";
 import style from "./App.module.scss";
 
 const App = () => {

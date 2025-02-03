@@ -1,7 +1,7 @@
 import { useContext } from "react";
-import { TableContext } from "../../store/TableContext";
+import { TableContext } from "../../contexts/TableContext";
 import style from "./DataTable.module.scss";
-import { HighlightContext } from "../../context/HighlightContext";
+import { HighlightContext } from "../../contexts/HighlightContext";
 
 type TableCellProps = {
   rowId?: number;
@@ -19,13 +19,14 @@ export const TableCell = ({ rowId, cellId, value }: TableCellProps) => {
       increaseCellValue(rowId, cellId);
     }
   };
+  const isHighlited = highlightedCells.includes(cellId ?? "");
+  console.log(cellId);
 
   return (
     <td
       className={`${style.table_cell} ${
-        highlightedCells.includes(cellId ?? "") ? style.highlighted : ""
+        isHighlited ? style.highlighted : cellId && style.currentHiglighted 
       }`}
-      title={cellId && "Click to increase"}
       onClick={handleCellClick}
       onMouseLeave={handleMouseLeave}
       onMouseEnter={() => handleMouseEnter(+value, cellId!, rowId!)}

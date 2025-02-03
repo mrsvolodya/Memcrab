@@ -1,9 +1,9 @@
 import { useContext } from "react";
 import style from "./DataTable.module.scss";
-import { TableContext } from "../../store/TableContext";
+import { TableContext } from "../../contexts/TableContext";
 import { IconButton } from "../UI elements/IconButton/IconButton";
 import PushIcon from "../../assets/icon-add-row.svg";
-import { MatrixContext } from "../../context/MatrixContext";
+import { MatrixContext } from "../../contexts/MatrixContext";
 
 export const TableHead = () => {
   const { addRow } = useContext(TableContext);
