@@ -1,12 +1,13 @@
 import { TableCell } from "./TableCell";
 import { CellType } from "../../types/CellType";
 import { IconButton } from "../UI elements/IconButton/IconButton";
-import { useContext, useMemo } from "react";
+import { memo, useCallback, useContext, useMemo } from "react";
 import { TableContext } from "../../store/TableContext";
 import { getRowTitle } from "../../utils/getRowTitle";
 import DeleteIcon from "../../assets/icon-del.svg";
 import style from "../DataTable/DataTable.module.scss";
 import { getPersentOfSum } from "../../utils/getPersentOfSum";
+import { HighlightContext } from "../../context/HighlightContext";
 
 type TableRowProps = {
   cells: CellType[];
@@ -14,16 +15,16 @@ type TableRowProps = {
   sum: number;
 };
 
-export const TableRow = ({ cells, rowID, sum }: TableRowProps) => {
-  const { deleteRow, isPersent } = useContext(TableContext);
+const TableRowBase = ({ cells, rowID, sum }: TableRowProps) => {
+  const { deleteRow } = useContext(TableContext);
+  const { isPersent } = useContext(HighlightContext);
 
   const title = getRowTitle(cells[0].id);
-
-  const { percentages } = useMemo(() => {
-    return {
-      percentages: getPersentOfSum(sum, cells),
-    };
-  }, [cells, sum]);
+  const handleDelete = useCallback(() => deleteRow(rowID), [deleteRow, rowID]);
+  const percentages = useMemo(
+    () => (isPersent.isActive && isPersent.id === rowID ? getPersentOfSum(sum, cells) : []),
+    [isPersent, rowID, sum, cells]
+  );
 
   return (
     <>
@@ -31,7 +32,7 @@ export const TableRow = ({ cells, rowID, sum }: TableRowProps) => {
         <th scope="row" className={style.table_cell}>
           <IconButton
             icon={DeleteIcon}
-            onClick={() => deleteRow(rowID)}
+            onClick={handleDelete}
             title={title}
           />
         </th>
@@ -55,3 +56,6 @@ export const TableRow = ({ cells, rowID, sum }: TableRowProps) => {
     </>
   );
 };
+
+
+export const TableRow = memo(TableRowBase)

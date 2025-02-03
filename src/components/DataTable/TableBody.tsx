@@ -1,13 +1,16 @@
-import { useContext } from "react";
-import { TableContext } from "../../store/TableContext";
+import { memo, useContext } from "react";
 import { TableRow } from "./TableRow";
 import style from "./DataTable.module.scss";
 import { TableCell } from "./TableCell";
 import { calcPercentail } from "../../utils/calcPercentail";
+import { MatrixContext } from "../../context/MatrixContext";
 
-export const TableBody = () => {
-  const { matrix } = useContext(TableContext);
+const TableBodyBase  = () => {
+  const matrixContext = useContext(MatrixContext);
+  if (!matrixContext) return null;
+  const { matrix } = matrixContext;
   const percentile = calcPercentail(matrix);
+
   if (
     !matrix.length ||
     matrix.every((row) => row.length === 0) ||
@@ -31,3 +34,5 @@ export const TableBody = () => {
     </tbody>
   );
 };
+
+export const TableBody = memo(TableBodyBase);

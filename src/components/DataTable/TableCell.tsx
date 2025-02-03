@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { TableContext } from "../../store/TableContext";
 import style from "./DataTable.module.scss";
+import { HighlightContext } from "../../context/HighlightContext";
 
 type TableCellProps = {
   rowId?: number;
@@ -9,12 +10,9 @@ type TableCellProps = {
 };
 
 export const TableCell = ({ rowId, cellId, value }: TableCellProps) => {
-  const {
-    increaseCellValue,
-    highlightedCells,
-    handleMouseEnter,
-    handleMouseLeave,
-  } = useContext(TableContext);
+  const { increaseCellValue } = useContext(TableContext);
+  const { highlightedCells, handleMouseEnter, handleMouseLeave } =
+    useContext(HighlightContext);
 
   const handleCellClick = () => {
     if (rowId !== undefined && cellId) {

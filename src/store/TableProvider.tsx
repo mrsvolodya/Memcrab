@@ -9,6 +9,8 @@ import { getNextRowIndex } from "../utils/getNextRowIndex.ts";
 import { InputRangeType } from "../types/InputRangeType.ts";
 import { INPUT_RANGE_DEFAULT } from "../constants/INPUT_RANGE_DEFAULT.ts";
 import { PersentType } from "../types/PersentType.ts";
+import { MatrixContext } from "../context/MatrixContext.tsx";
+import { HighlightContext } from "../context/HighlightContext.tsx";
 
 export const TableProvider = ({ children }: TableProviderType) => {
   const [inputRange, setInputRange] =
@@ -24,20 +26,16 @@ export const TableProvider = ({ children }: TableProviderType) => {
   );
 
   useEffect(() => {
-    requestAnimationFrame(() => {
-      setMatrix((prevMatrix) => {
-        const newMatrix = createMatrix(inputRange);
-        return newMatrix.map((row, rowIndex) =>
-          row.map((cell, cellIndex) => {
-            const existingCell = prevMatrix[rowIndex]?.[cellIndex];
-            return existingCell
-              ? { ...cell, amount: existingCell.amount }
-              : cell;
-          })
-        );
-      });
+    setMatrix((prevMatrix) => {
+      if (
+        prevMatrix.length === inputRange.M &&
+        prevMatrix[0]?.length === inputRange.N
+      ) {
+        return prevMatrix;
+      }
+      return createMatrix(inputRange);
     });
-  }, [inputRange.M, inputRange.N]);
+  }, [inputRange]);
 
   const increaseCellValue = useCallback(
     (rowId: number, cellId: string) => {
@@ -97,25 +95,37 @@ export const TableProvider = ({ children }: TableProviderType) => {
     setIsPersent({ id: null, isActive: false });
   };
 
-  const values = useMemo(
+  const tableValues = useMemo(
     () => ({
       addRow,
-      matrix,
-      isPersent,
       deleteRow,
-      setMatrix,
       inputRange,
       setInputRange,
       highlightCount,
-      highlightedCells,
-      handleMouseEnter,
-      handleMouseLeave,
       increaseCellValue,
       sethighlightCount,
     }),
-    [matrix, highlightedCells, inputRange]
+    [inputRange]
+  );
+
+  const matrixValues = useMemo(() => ({ matrix, setMatrix }), [matrix]);
+
+  const highlightValues = useMemo(
+    () => ({
+      isPersent,
+      highlightedCells,
+      handleMouseEnter,
+      handleMouseLeave,
+    }),
+    [isPersent, highlightedCells]
   );
   return (
-    <TableContext.Provider value={values}>{children}</TableContext.Provider>
+    <MatrixContext.Provider value={matrixValues}>
+      <TableContext.Provider value={tableValues}>
+        <HighlightContext.Provider value={highlightValues}>
+          {children}
+        </HighlightContext.Provider>
+      </TableContext.Provider>
+    </MatrixContext.Provider>
   );
 };

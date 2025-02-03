@@ -1,11 +1,11 @@
 import style from "./DataTable.module.scss";
 import { TableHead } from "./TableHead";
 import { TableBody } from "./TableBody";
-import { useContext } from "react";
-import { TableContext } from "../../store/TableContext";
+import { memo, useContext } from "react";
+import { HighlightContext } from "../../context/HighlightContext";
 
-export const DataTable = () => {
-  const { handleMouseLeave } = useContext(TableContext);
+const DataTableBase = () => {
+  const { handleMouseLeave } = useContext(HighlightContext);
 
   return (
     <table className={style.table} onMouseLeave={handleMouseLeave}>
@@ -14,3 +14,5 @@ export const DataTable = () => {
     </table>
   );
 };
+
+export const DataTable = memo(DataTableBase);

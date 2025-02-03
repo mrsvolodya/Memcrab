@@ -3,9 +3,16 @@ import style from "./DataTable.module.scss";
 import { TableContext } from "../../store/TableContext";
 import { IconButton } from "../UI elements/IconButton/IconButton";
 import PushIcon from "../../assets/icon-add-row.svg";
+import { MatrixContext } from "../../context/MatrixContext";
 
 export const TableHead = () => {
-  const { addRow, matrix } = useContext(TableContext);
+  const { addRow } = useContext(TableContext);
+  const matrixContext = useContext(MatrixContext);
+
+  if (!matrixContext) return null;
+
+  const { matrix } = matrixContext;
+
   return (
     <thead className={style.table_head}>
       <tr className={style.table_row}>
