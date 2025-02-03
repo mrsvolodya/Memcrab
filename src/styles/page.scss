@@ -1,0 +1,10 @@
+.page {
+  overflow: hidden;
+  box-sizing: border-box;
+
+  &__table-section {
+    overflow: auto;
+    max-height: 80vh;
+    margin-inline: 20px;
+  }
+}
