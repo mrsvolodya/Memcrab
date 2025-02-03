@@ -1,11 +1,11 @@
-import { useContext } from "react";
+import { useContext, memo } from "react";
 import { AxisKey } from "../../enums/AxisKey";
 import { RangeInput } from "./RangeInput/RangeInput";
 import { TableContext } from "../../store/TableContext";
 import { calcLimitForX } from "../../utils/calcLimitForX";
 import style from "./RangeComponent.module.scss";
 
-export const RangeComponent = () => {
+export const RangeComponentBase = () => {
   const { inputRange } = useContext(TableContext);
   const maxCellsX = calcLimitForX(inputRange);
   return (
@@ -17,3 +17,5 @@ export const RangeComponent = () => {
     </div>
   );
 };
+
+export const RangeComponent = memo(RangeComponentBase);

@@ -8,7 +8,6 @@ import { calcPercentail } from "../../utils/calcPercentail";
 export const TableBody = () => {
   const { matrix } = useContext(TableContext);
   const percentile = calcPercentail(matrix);
-
   if (
     !matrix.length ||
     matrix.every((row) => row.length === 0) ||

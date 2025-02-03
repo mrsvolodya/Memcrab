@@ -37,34 +37,40 @@ export const TableProvider = ({ children }: TableProviderType) => {
         );
       });
     });
-  }, [inputRange]);
+  }, [inputRange.M, inputRange.N]);
 
-  const increaseCellValue = useCallback((rowId: number, cellId: string) => {
-    setMatrix((prevMatrix) =>
-      prevMatrix.map((row, i) =>
-        i === rowId
-          ? row.map((cell) =>
-              cell.id === cellId ? { ...cell, amount: cell.amount + 1 } : cell
-            )
-          : row
-      )
-    );
-  }, []);
+  const increaseCellValue = useCallback(
+    (rowId: number, cellId: string) => {
+      setMatrix((prevMatrix) =>
+        prevMatrix.map((row, i) =>
+          i === rowId
+            ? row.map((cell) =>
+                cell.id === cellId ? { ...cell, amount: cell.amount + 1 } : cell
+              )
+            : row
+        )
+      );
+    },
+    [setMatrix]
+  );
 
-  const deleteRow = useCallback((rowId: number) => {
-    setMatrix((prevMatrix) => {
-      return prevMatrix.filter((_, index) => rowId !== index);
-    });
-    setInputRange((prev) => ({ ...prev, M: Math.max(prev.M - 1, 1) }));
-  }, []);
+  const deleteRow = useCallback(
+    (rowId: number) => {
+      setMatrix((prevMatrix) => {
+        return prevMatrix.filter((_, index) => rowId !== index);
+      });
+      setInputRange((prev) => ({ ...prev, M: Math.max(prev.M - 1, 1) }));
+    },
+    [setMatrix, setInputRange]
+  );
 
-  const addRow = () => {
+  const addRow = useCallback(() => {
     const nextRowIndex = getNextRowIndex(matrix);
     const newRow = createMatrix({ M: 1, N: inputRange.N }, nextRowIndex);
 
     setMatrix((prevMatrix) => [...prevMatrix, ...newRow]);
     setInputRange((prev) => ({ ...prev, M: prev.M + 1 }));
-  };
+  }, [matrix, inputRange.N, setMatrix, setInputRange]);
 
   const handleMouseEnter = useCallback(
     (value: number, cellId: string = "", rowId: number) => {
@@ -107,7 +113,7 @@ export const TableProvider = ({ children }: TableProviderType) => {
       increaseCellValue,
       sethighlightCount,
     }),
-    [matrix, increaseCellValue, highlightedCells, inputRange]
+    [matrix, highlightedCells, inputRange]
   );
   return (
     <TableContext.Provider value={values}>{children}</TableContext.Provider>

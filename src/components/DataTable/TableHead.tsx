@@ -6,7 +6,6 @@ import PushIcon from "../../assets/icon-add-row.svg";
 
 export const TableHead = () => {
   const { addRow, matrix } = useContext(TableContext);
-
   return (
     <thead className={style.table_head}>
       <tr className={style.table_row}>
