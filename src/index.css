@@ -15,5 +15,9 @@
 
 * {
   margin: 0;
+<<<<<<< HEAD
+=======
+  padding: 0;
+>>>>>>> d637516 (clean project)
   box-sizing: border-box;
 }
