@@ -12,7 +12,7 @@ export type TableContextType = {
   deleteRow: (rowId: number) => void;
   inputRange: InputRangeType;
   sethighlightCount: (r: number) => void;
+  increaseCellValue: (rodId: number, cellId: string) => void;
   setInputRange: React.Dispatch<React.SetStateAction<InputRangeType>>;
   handleMouseEnter: (value: number, cellId: string, rowId: number) => void;
-  increaseCellValue: (rodId: number, cellId: string) => void;
 };
