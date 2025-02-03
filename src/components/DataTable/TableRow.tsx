@@ -31,8 +31,8 @@ const TableRowBase = ({ cells, rowID, sum }: TableRowProps) => {
 
   return (
     <>
-      <tr className={style.table_row}>
-        <th scope="row" className={style.table_cell}>
+      <tr className={style.table__row}>
+        <th scope="row" className={style.table__cell}>
           <IconButton icon={DeleteIcon} onClick={handleDelete} title={title} />
         </th>
         {cells.map((cell, cellIndex) => {

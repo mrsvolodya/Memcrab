@@ -14,18 +14,20 @@ export const TableHead = () => {
   const { matrix } = matrixContext;
 
   return (
-    <thead className={style.table_head}>
-      <tr className={style.table_row}>
-        <th scope="col" className={style.table_cell}>
+    <thead className={style.table__header}>
+      <tr>
+        <th scope="col" className={style.table__cell}>
           <IconButton icon={PushIcon} title={"Add row:"} onClick={addRow} />
         </th>
         {matrix.length > 0 &&
           matrix[0].map((_, i) => (
-            <th scope="col" className={style.table_cell} key={`header_${i}`}>
-              Cell values N = {i + 1}
+            <th scope="col" className={style.table__cell} key={`header_${i}`}>
+              Cell values 
+              <br />
+              N = {i + 1}
             </th>
           ))}
-        <th scope="col" className={style.table_cell}>
+        <th scope="col" className={style.table__cell}>
           Sum values
         </th>
       </tr>

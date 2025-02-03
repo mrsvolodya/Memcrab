@@ -12,7 +12,7 @@ const App = () => {
         <RangeComponent />
       </header>
       <main>
-        <section className={style.page_tableSection}>
+        <section className={style[`page__table-section`]}>
           {inputRange.N >= 1 && inputRange.M >= 1 && <DataTable />}
         </section>
       </main>

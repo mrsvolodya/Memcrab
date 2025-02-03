@@ -19,14 +19,14 @@ export const TableCell = ({ rowId, cellId, value }: TableCellProps) => {
       increaseCellValue(rowId, cellId);
     }
   };
-  const isHighlited = highlightedCells.includes(cellId ?? "");
-  console.log(cellId);
+
+  const isHighlighted = highlightedCells.includes(cellId ?? "");
 
   return (
     <td
-      className={`${style.table_cell} ${
-        isHighlited ? style.highlighted : cellId && style.currentHiglighted 
-      }`}
+      className={`${style.table__cell} ${
+        isHighlighted ? style["table__cell--highlighted"] : ""
+      } ${cellId ? style["table__cell--interactive"] : ""}`}
       onClick={handleCellClick}
       onMouseLeave={handleMouseLeave}
       onMouseEnter={() => handleMouseEnter(+value, cellId!, rowId!)}

@@ -20,13 +20,13 @@ const TableBodyBase = () => {
   }
 
   return (
-    <tbody className={style.table_body}>
+    <tbody className={style.table__body}>
       {matrix.map((cells, i) => {
         const sum = cells.reduce((acc, col) => acc + col.amount, 0);
         return <TableRow key={i} cells={cells} rowID={i} sum={sum} />;
       })}
-      <tr className={style.table_row}>
-        <th className={style.table_cell}>50th percentile</th>
+      <tr className={style.table__row}>
+        <th className={style.table__cell}>50th percentile</th>
         {percentile.map((cell) => (
           <TableCell key={cell.id} value={cell.amount} />
         ))}

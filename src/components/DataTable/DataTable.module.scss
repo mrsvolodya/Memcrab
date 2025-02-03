@@ -3,48 +3,71 @@
   font-size: 12px;
   border-collapse: collapse;
   letter-spacing: 1px;
+  table-layout: fixed;
 
-  &_head {
+  &__header {
     background-color: #3a3b41;
   }
 
-  &_cell {
-    border: 1px solid rgb(160 160 160);
+  &__row {
+    &:last-child {
+      @extend .table__cell--percentile;
+    }
+  }
+
+  &__cell {
+    border: 1px solid #a0a0a0;
     text-align: center;
     cursor: pointer;
     padding: 6px 8px;
     user-select: none;
     min-width: 60px;
     max-width: 180px;
-  }
-}
-.highlighted {
-  background-color: rgb(54, 72, 110);
-}
-
-.currentHiglighted {
-  position: relative;
-  transition: transform 0.2s ease-in-out;
-
-  &:hover {
-    transform: scale(1.02);
-    background-color: rgb(160, 189, 32);
-  }
-
-  &:hover::after {
-    content: "Click to increase";
-    position: absolute;
-    top: -20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: black;
-    color: white;
-    padding: 4px 4px;
-    border-radius: 5px;
-    font-size: 12px;
     white-space: nowrap;
-    opacity: 0;
-    animation: fadeOut 1.5s forwards;
+    transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
+
+    &--highlighted {
+      background-color: #36486e;
+    }
+
+    &--percentile {
+      font-weight: 600;
+      font-size: 14px;
+      background-color: #83705b;
+      color: #3a3b41;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      border-top: 2px solid #a0a0a0;
+    }
+
+    &:last-child {
+      @extend .table__cell--percentile;
+    }
+
+    &--interactive {
+      position: relative;
+
+      &:hover {
+        transform: scale(1.05);
+        background-color: #a0bd20;
+      }
+
+      &:hover::after {
+        content: "Click to increase";
+        position: absolute;
+        top: -25px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: black;
+        color: white;
+        padding: 5px 8px;
+        border-radius: 5px;
+        font-size: 12px;
+        white-space: nowrap;
+        opacity: 0;
+        animation: fadeOut 1.5s forwards;
+      }
+    }
   }
 }
 
@@ -53,10 +76,10 @@
     opacity: 0;
   }
   10% {
-    opacity: 0.9;
+    opacity: 1;
   }
   90% {
-    opacity: 0.9;
+    opacity: 1;
   }
   100% {
     opacity: 0;
