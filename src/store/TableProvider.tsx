@@ -9,7 +9,6 @@ import { getNextRowIndex } from "../utils/getNextRowIndex.ts";
 import { InputRangeType } from "../types/InputRangeType.ts";
 import { INPUT_RANGE_DEFAULT } from "../constants/INPUT_RANGE_DEFAULT.ts";
 import { PersentType } from "../types/PersentType.ts";
-import { useDebounce } from "../hooks/useDebounce.ts";
 
 export const TableProvider = ({ children }: TableProviderType) => {
   const [inputRange, setInputRange] =
@@ -24,12 +23,10 @@ export const TableProvider = ({ children }: TableProviderType) => {
     createMatrix(inputRange)
   );
 
-  const debouncedInputRange = useDebounce(inputRange, 2000);
-
   useEffect(() => {
     requestAnimationFrame(() => {
       setMatrix((prevMatrix) => {
-        const newMatrix = createMatrix(debouncedInputRange);
+        const newMatrix = createMatrix(inputRange);
         return newMatrix.map((row, rowIndex) =>
           row.map((cell, cellIndex) => {
             const existingCell = prevMatrix[rowIndex]?.[cellIndex];
@@ -40,7 +37,7 @@ export const TableProvider = ({ children }: TableProviderType) => {
         );
       });
     });
-  }, [debouncedInputRange]);
+  }, [inputRange]);
 
   const increaseCellValue = useCallback((rowId: number, cellId: string) => {
     setMatrix((prevMatrix) =>
