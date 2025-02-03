@@ -1,9 +1,9 @@
 import { memo, useContext } from "react";
 import { TableRow } from "./TableRow";
-import style from "./DataTable.module.scss";
 import { TableCell } from "./TableCell";
 import { calcPercentail } from "../../utils/calcPercentail";
 import { MatrixContext } from "../../contexts/MatrixContext";
+import style from "./DataTable.module.scss";
 
 const TableBodyBase = () => {
   const matrixContext = useContext(MatrixContext);
@@ -22,8 +22,7 @@ const TableBodyBase = () => {
   return (
     <tbody className={style.table__body}>
       {matrix.map((cells, i) => {
-        const sum = cells.reduce((acc, col) => acc + col.amount, 0);
-        return <TableRow key={i} cells={cells} rowID={i} sum={sum} />;
+        return <TableRow key={i} cells={cells} rowID={i} />;
       })}
       <tr className={style.table__row}>
         <th className={style.table__cell}>50th percentile</th>

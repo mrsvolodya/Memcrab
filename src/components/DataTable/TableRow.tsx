@@ -12,15 +12,16 @@ import { HighlightContext } from "../../contexts/HighlightContext";
 type TableRowProps = {
   cells: CellType[];
   rowID: number;
-  sum: number;
 };
 
-const TableRowBase = ({ cells, rowID, sum }: TableRowProps) => {
+const TableRowBase = ({ cells, rowID }: TableRowProps) => {
   const { deleteRow } = useContext(TableContext);
   const { isPersent } = useContext(HighlightContext);
 
-  const title = getRowTitle(cells[0].id);
   const handleDelete = useCallback(() => deleteRow(rowID), [deleteRow, rowID]);
+
+  const sum = cells.reduce((acc, col) => acc + col.amount, 0);
+
   const percentages = useMemo(
     () =>
       isPersent.isActive && isPersent.id === rowID
@@ -29,9 +30,12 @@ const TableRowBase = ({ cells, rowID, sum }: TableRowProps) => {
     [isPersent, rowID, sum, cells]
   );
 
+  const title = getRowTitle(cells[0].id);
+  const isSumHovered = isPersent.isActive && isPersent.id === rowID || '';
+
   return (
     <>
-      <tr className={style.table__row}>
+      <tr className={(style.table__row, isSumHovered && style[`table__row--sum`])}>
         <th scope="row" className={style.table__cell}>
           <IconButton icon={DeleteIcon} onClick={handleDelete} title={title} />
         </th>
@@ -41,11 +45,7 @@ const TableRowBase = ({ cells, rowID, sum }: TableRowProps) => {
               key={cell.id}
               rowId={rowID}
               cellId={cell.id}
-              value={
-                isPersent.isActive && isPersent.id === rowID
-                  ? `${percentages[cellIndex]} %`
-                  : cell.amount
-              }
+              value={isSumHovered ? `${percentages[cellIndex]} %` : cell.amount}
             />
           );
         })}
