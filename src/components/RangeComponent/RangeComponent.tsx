@@ -8,7 +8,6 @@ import style from "./RangeComponent.module.scss";
 export const RangeComponent = () => {
   const { inputRange } = useContext(TableContext);
   const maxCellsX = calcLimitForX(inputRange);
-
   return (
     <div className={style.rangeContaiter}>
       <h4 className={style.rangeContaiter_title}>Range for M , N, X</h4>

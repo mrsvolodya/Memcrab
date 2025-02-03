@@ -6,6 +6,7 @@ import { TableContext } from "../../store/TableContext";
 
 export const DataTable = () => {
   const { handleMouseLeave } = useContext(TableContext);
+
   return (
     <table className={style.table} onMouseLeave={handleMouseLeave}>
       <TableHead />

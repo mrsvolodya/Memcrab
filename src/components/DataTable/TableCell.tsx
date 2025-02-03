@@ -17,18 +17,17 @@ export const TableCell = ({ rowId, cellId, value }: TableCellProps) => {
   } = useContext(TableContext);
 
   const handleCellClick = () => {
-    if ((rowId || rowId === 0) && cellId) {
+    if (rowId !== undefined && cellId) {
       increaseCellValue(rowId, cellId);
     }
   };
 
-  const titleMessage = cellId && "Click to increase";
   return (
     <td
       className={`${style.table_cell} ${
-        highlightedCells.includes(cellId!) ? style.highlighted : ""
+        highlightedCells.includes(cellId ?? "") ? style.highlighted : ""
       }`}
-      title={titleMessage}
+      title={cellId && "Click to increase"}
       onClick={handleCellClick}
       onMouseLeave={handleMouseLeave}
       onMouseEnter={() => handleMouseEnter(+value, cellId!, rowId!)}

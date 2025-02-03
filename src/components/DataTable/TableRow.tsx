@@ -16,7 +16,6 @@ type TableRowProps = {
 
 export const TableRow = ({ cells, rowID, sum }: TableRowProps) => {
   const { deleteRow, isPersent } = useContext(TableContext);
-
   const title = getRowTitle(cells[0].id);
 
   const { percentages } = useMemo(() => {
