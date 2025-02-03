@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { useContext } from "react";
 import { DataTable } from "./components/DataTable/DataTable";
 import { RangeComponent } from "./components/RangeComponent/RangeComponent";
@@ -13,19 +12,5 @@ const App = () => {
     </div>
   );
 };
-=======
-import './App.css'
-
-function App() {
-  return (
-    <>
-      <div>
-        
-      </div>
-      
-    </>
-  )
-}
->>>>>>> d637516 (clean project)
 
 export default App;
