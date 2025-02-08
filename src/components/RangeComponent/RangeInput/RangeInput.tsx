@@ -22,7 +22,8 @@ export const RangeInput: React.FC<AxisProps> = ({
 
   const rangeOf = convertAxisToName(axis, inputRange);
 
-  const handleInputChange = (newRange: number) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newRange = +e.target.value;
     if (axis === AxisKey.X) {
       sethighlightCount(newRange);
     }
@@ -35,17 +36,18 @@ export const RangeInput: React.FC<AxisProps> = ({
   };
   return (
     <div className={style.range}>
-      <label htmlFor={axis} className={style.range_name}>
+      <label htmlFor={axis} className={style.range__name}>
         {axis}: {inputRange[axis]} {rangeOf}
       </label>
       <input
         type="range"
         id={axis}
+        className={style.range__input}
         name={`range of ${axis}`}
         min={min}
         max={max}
         value={inputRange[axis]}
-        onChange={(e) => handleInputChange(+e.target.value)}
+        onChange={handleInputChange}
       />
     </div>
   );

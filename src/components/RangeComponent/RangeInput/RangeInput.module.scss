@@ -2,7 +2,10 @@
   display: flex;
   justify-content: center;
   gap: 20px;
-  &_name {
+  &__name {
     min-width: 200px;
+  }
+  &__input {
+    cursor: pointer;
   }
 }

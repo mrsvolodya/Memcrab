@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { TableContext } from "../contexts/TableContext.tsx";
 import { createMatrix } from "../utils/createMatrix.ts";
 import { MatrixType } from "../types/MatrixType.ts";
@@ -37,57 +37,52 @@ export const StoreProvider = ({ children }: TableProviderType) => {
     });
   }, [inputRange]);
 
-  const increaseCellValue = useCallback(
-    (rowId: number, cellId: string) => {
-      setMatrix((prevMatrix) =>
-        prevMatrix.map((row, i) =>
-          i === rowId
-            ? row.map((cell) =>
-                cell.id === cellId ? { ...cell, amount: cell.amount + 1 } : cell
-              )
-            : row
-        )
-      );
-    },
-    [setMatrix]
-  );
+  const increaseCellValue = (rowId: number, cellId: string) => {
+    setMatrix((prevMatrix) =>
+      prevMatrix.map((row, i) =>
+        i === rowId
+          ? row.map((cell) =>
+              cell.id === cellId ? { ...cell, amount: cell.amount + 1 } : cell
+            )
+          : row
+      )
+    );
+  };
 
-  const deleteRow = useCallback(
-    (rowId: number) => {
-      setMatrix((prevMatrix) => {
-        return prevMatrix.filter((_, index) => rowId !== index);
-      });
-      setInputRange((prev) => ({ ...prev, M: Math.max(prev.M - 1, 1) }));
-    },
-    [setMatrix, setInputRange]
-  );
+  const deleteRow = (rowId: number) => {
+    setMatrix((prevMatrix) => {
+      return prevMatrix.filter((_, index) => rowId !== index);
+    });
+    setInputRange((prev) => ({ ...prev, M: Math.max(prev.M - 1, 1) }));
+  };
 
-  const addRow = useCallback(() => {
+  const addRow = () => {
     const nextRowIndex = getNextRowIndex(matrix);
     const newRow = createMatrix({ M: 1, N: inputRange.N }, nextRowIndex);
 
     setMatrix((prevMatrix) => [...prevMatrix, ...newRow]);
     setInputRange((prev) => ({ ...prev, M: prev.M + 1 }));
-  }, [matrix, inputRange.N, setMatrix, setInputRange]);
+  };
 
-  const handleMouseEnter = useCallback(
-    (value: number, cellId: string = "", rowId: number) => {
-      if (!cellId && !rowId && rowId !== 0) {
-        setHighlightedCells([]);
-        return;
-      }
+  const handleMouseEnter = (
+    value: number,
+    cellId: string = "",
+    rowId: number
+  ) => {
+    if (!cellId && !rowId && rowId !== 0) {
+      setHighlightedCells([]);
+      return;
+    }
 
-      if ((rowId === 0 || rowId) && !cellId) {
-        setIsPersent({ id: rowId, isActive: true });
-        return;
-      }
+    if ((rowId === 0 || rowId) && !cellId) {
+      setIsPersent({ id: rowId, isActive: true });
+      return;
+    }
 
-      setHighlightedCells(
-        findNearestCells(matrix, value, highlightCount, cellId)
-      );
-    },
-    [matrix, highlightCount]
-  );
+    setHighlightedCells(
+      findNearestCells(matrix, value, highlightCount, cellId)
+    );
+  };
 
   const handleMouseLeave = () => {
     setHighlightedCells([]);
