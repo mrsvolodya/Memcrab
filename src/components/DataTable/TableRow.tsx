@@ -4,10 +4,10 @@ import { IconButton } from "../UI elements/IconButton/IconButton";
 import { memo, useContext } from "react";
 import { TableContext } from "../../contexts/TableContext";
 import { getRowTitle } from "../../utils/getRowTitle";
-import DeleteIcon from "../../assets/icon-del.svg";
-import style from "../DataTable/DataTable.module.scss";
 import { getPersentOfSum } from "../../utils/getPersentOfSum";
 import { HighlightContext } from "../../contexts/HighlightContext";
+import DeleteIcon from "../../assets/icon-del.svg";
+import style from "../DataTable/DataTable.module.scss";
 
 type TableRowProps = {
   cells: CellType[];

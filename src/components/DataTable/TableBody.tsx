@@ -1,11 +1,11 @@
-import { memo, useContext } from "react";
+import { useContext } from "react";
 import { TableRow } from "./TableRow";
 import { TableCell } from "./TableCell";
 import { calcPercentail } from "../../utils/calcPercentail";
 import { MatrixContext } from "../../contexts/MatrixContext";
 import style from "./DataTable.module.scss";
 
-const TableBodyBase = () => {
+export const TableBody = () => {
   const matrixContext = useContext(MatrixContext);
   if (!matrixContext) return null;
   const { matrix } = matrixContext;
@@ -33,5 +33,3 @@ const TableBodyBase = () => {
     </tbody>
   );
 };
-
-export const TableBody = memo(TableBodyBase);

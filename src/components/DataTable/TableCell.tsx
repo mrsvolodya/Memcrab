@@ -1,7 +1,7 @@
-import { useContext } from "react";
+import { memo, useContext } from "react";
 import { TableContext } from "../../contexts/TableContext";
-import style from "./DataTable.module.scss";
 import { HighlightContext } from "../../contexts/HighlightContext";
+import style from "./DataTable.module.scss";
 
 type TableCellProps = {
   rowId?: number;
@@ -9,7 +9,7 @@ type TableCellProps = {
   value: number | string;
 };
 
-export const TableCell = ({ rowId, cellId, value }: TableCellProps) => {
+export const TableCellBase = ({ rowId, cellId, value }: TableCellProps) => {
   const { increaseCellValue } = useContext(TableContext);
   const { highlightedCells, handleMouseEnter, handleMouseLeave } =
     useContext(HighlightContext);
@@ -35,3 +35,5 @@ export const TableCell = ({ rowId, cellId, value }: TableCellProps) => {
     </td>
   );
 };
+
+export const TableCell = memo(TableCellBase)
