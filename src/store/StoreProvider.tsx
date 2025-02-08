@@ -82,11 +82,9 @@ export const StoreProvider = ({ children }: TableProviderType) => {
         return;
       }
 
-      requestAnimationFrame(() => {
-        setHighlightedCells(
-          findNearestCells(matrix, value, highlightCount, cellId)
-        );
-      });
+      setHighlightedCells(
+        findNearestCells(matrix, value, highlightCount, cellId)
+      );
     },
     [matrix, highlightCount]
   );

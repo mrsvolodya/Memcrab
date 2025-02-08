@@ -24,9 +24,7 @@ export const RangeInput: React.FC<AxisProps> = ({
 
   const handleInputChange = (newRange: number) => {
     if (axis === AxisKey.X) {
-      requestAnimationFrame(() => {
-        sethighlightCount(newRange);
-      });
+      sethighlightCount(newRange);
     }
 
     setInputRange((prevInputRange) => ({
